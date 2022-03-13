@@ -1,0 +1,62 @@
+# DCGNN model with Surreal dataset
+# use for our CorDGM
+
+TASK_NAME: CorrDGM
+
+DATASET:
+  BATCH_SIZE: 4
+  USE_SIZE: 5000
+  POINT_NUM: 1024
+
+# PGM model parameters
+PGM:
+  FEATURE_NODE_CHANNEL: 512
+  FEATURE_EDGE_CHANNEL: 512
+  BS_ITER_NUM: 20
+  BS_EPSILON: 1.0e-10
+  VOTING_ALPHA: 20.
+  GNN_FEAT: 1024
+  GNN_LAYER: 1
+  NORMALS: True
+  FEATURES:
+    - xyz
+    - gxyz
+  NEIGHBORSNUM: 20
+
+
+MODEL_NAME: CorrDGM
+DATASET_NAME: Surreal
+
+
+MODULE: models.Net
+DATALOADER_NUM: 0
+RANDOM_SEED: 123
+
+# available GPU ids
+GPUS:
+  - 0
+#  - 1
+
+# Dispaly information
+VISDOM:
+#  OPEN: True
+  PORT: 8097
+  SERVER: http://localhost
+
+# Training settings
+TRAIN:
+  # start, end epochs
+  START_EPOCH: 0
+  NUM_EPOCHS: 300
+
+  LOSS_FUNC: BCELoss
+
+  # learning rate
+  OPTIM: SGD
+  LR: 1.0e-2
+  MOMENTUM: 0.9
+  LR_DECAY: 0.1
+  LR_STEP:  # (in epochs)
+    - 15
+    - 25
+
